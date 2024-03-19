@@ -1,3 +1,4 @@
+/* eslint-disable react-native/no-inline-styles */
 import React, {useEffect, useState, useLayoutEffect, useCallback} from 'react';
 import {
   ActivityIndicator,
@@ -8,8 +9,8 @@ import {
   TouchableOpacity,
   View,
   useWindowDimensions,
+  FlatList,
 } from 'react-native';
-import {FlashList} from '@shopify/flash-list';
 import MovieCard from 'components/MovieCard';
 import Separator from 'components/Separator';
 
@@ -107,18 +108,20 @@ export default function Search({navigation}: SearchProps) {
       )}
 
       {movies && (
-        <FlashList
+        <FlatList
           data={movies}
+          contentContainerStyle={styles.contentContainer}
+          columnWrapperStyle={styles.columnWrapper}
           renderItem={({item}: {item: PopularMovies}) => (
             <MovieCard
               {...item}
               onPress={() => navigation.navigate('Details', {id: item.id})}
+              style={{width: width > 600 ? '45%' : '100%'}}
             />
           )}
-          contentContainerStyle={styles.contentContainer}
+          numColumns={2}
+          key={100}
           ItemSeparatorComponent={Separator}
-          estimatedItemSize={190 * 15}
-          numColumns={width > 600 ? 2 : 1}
         />
       )}
     </View>
@@ -132,6 +135,12 @@ const styles = StyleSheet.create({
 
   contentContainer: {
     padding: 20,
+  },
+
+  columnWrapper: {
+    flexWrap: 'wrap',
+    justifyContent: 'space-around',
+    gap: 10,
   },
 
   input: {

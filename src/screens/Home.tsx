@@ -1,3 +1,4 @@
+/* eslint-disable react-native/no-inline-styles */
 import React from 'react';
 import {View, Text, StyleSheet, useWindowDimensions} from 'react-native';
 import {FlashList} from '@shopify/flash-list';
@@ -31,6 +32,7 @@ const Home: React.FC<HomePorps> = ({navigation}) => {
         data={movies}
         renderItem={({item}: {item: PopularMovies}) => (
           <MovieCard
+            style={{width: width > 600 ? '95%' : '100%'}}
             {...item}
             onPress={() => navigation.navigate('Details', {id: item.id})}
           />

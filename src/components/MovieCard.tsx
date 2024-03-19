@@ -8,7 +8,8 @@ import {
   Image,
   ActivityIndicator,
   TouchableOpacity,
-  useWindowDimensions,
+  StyleProp,
+  ViewStyle,
 } from 'react-native';
 
 import {PopularMovies} from 'types/types';
@@ -16,6 +17,7 @@ import Icon from 'react-native-vector-icons/AntDesign';
 
 interface MovieCardProps extends PopularMovies {
   onPress: () => void;
+  style?: StyleProp<ViewStyle>;
 }
 
 const MovieCard: React.FC<MovieCardProps> = ({
@@ -24,19 +26,12 @@ const MovieCard: React.FC<MovieCardProps> = ({
   onPress,
   backdrop_path,
   poster_path,
+  style,
 }) => {
   const [imageLoading, setImageLoading] = useState(true);
-  const {width} = useWindowDimensions();
 
   return (
-    <TouchableOpacity
-      onPress={onPress}
-      style={[
-        styles.container,
-        {
-          width: width > 600 ? '95%' : '100%',
-        },
-      ]}>
+    <TouchableOpacity onPress={onPress} style={[styles.container, style]}>
       <View style={styles.imageContainer}>
         {imageLoading && (
           <ActivityIndicator size={'large'} style={styles.image} />
